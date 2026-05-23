@@ -1,69 +1,61 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function Dashboard() {
-  const [stats, setStats] = useState({
-    total: 0,
-    today: 0,
-  });
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    // temporary mock data (we connect Supabase later)
-    setStats({
-      total: 24,
-      today: 6,
-    });
+    async function loadStats() {
+      const { data, error } = await supabase
+        .from("appointments")
+        .select("*");
+
+      if (!error && data) {
+        setTotal(data.length);
+      }
+    }
+
+    loadStats();
   }, []);
 
   return (
     <main className="min-h-screen bg-gray-100 p-6">
-      
-      {/* Header */}
+
       <h1 className="text-3xl font-bold text-blue-700">
         Clinic Dashboard
       </h1>
 
       <p className="text-gray-600 mt-1">
-        Welcome back, Doctor 👨‍⚕️
+        Live appointment statistics
       </p>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
 
+        {/* Total Appointments */}
         <div className="bg-white p-5 rounded-2xl shadow">
-          <h2 className="text-gray-500">Total Appointments</h2>
-          <p className="text-3xl font-bold">{stats.total}</p>
+          <h2 className="text-gray-500">
+            Total Appointments
+          </h2>
+
+          <p className="text-4xl font-bold mt-2">
+            {total}
+          </p>
         </div>
 
+        {/* Status */}
         <div className="bg-white p-5 rounded-2xl shadow">
-          <h2 className="text-gray-500">Today</h2>
-          <p className="text-3xl font-bold">{stats.today}</p>
+          <h2 className="text-gray-500">
+            System Status
+          </h2>
+
+          <p className="text-green-600 text-xl mt-2">
+            Online
+          </p>
         </div>
 
       </div>
-
-      {/* Quick Actions */}
-      <div className="mt-6 bg-white p-5 rounded-2xl shadow">
-        <h2 className="font-semibold mb-3">Quick Actions</h2>
-
-        <div className="flex gap-3">
-          <a
-            href="/appointments"
-            className="bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            New Appointment
-          </a>
-
-          <a
-            href="/appointments/list"
-            className="bg-green-600 text-white px-4 py-2 rounded"
-          >
-            View Appointments
-          </a>
-        </div>
-      </div>
-
     </main>
   );
 }
