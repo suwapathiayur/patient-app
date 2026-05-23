@@ -7,55 +7,63 @@ export default function Dashboard() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    async function loadStats() {
-      const { data, error } = await supabase
+    async function loadData() {
+      const { data } = await supabase
         .from("appointments")
         .select("*");
 
-      if (!error && data) {
-        setTotal(data.length);
-      }
+      setTotal(data?.length || 0);
     }
 
-    loadStats();
+    loadData();
   }, []);
 
   return (
-    <main className="min-h-screen bg-gray-100 p-6">
+    <main>
 
-      <h1 className="text-3xl font-bold text-blue-700">
-        Clinic Dashboard
+      <h1 className="text-4xl font-bold text-blue-500">
+        Dashboard
       </h1>
 
-      <p className="text-gray-600 mt-1">
-        Live appointment statistics
+      <p className="text-gray-400 mt-2">
+        Modern clinic management system
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+      {/* Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
 
-        {/* Total Appointments */}
-        <div className="bg-white p-5 rounded-2xl shadow">
-          <h2 className="text-gray-500">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-6 rounded-2xl shadow-xl">
+          <p className="text-sm opacity-80">
             Total Appointments
-          </h2>
-
-          <p className="text-4xl font-bold mt-2">
-            {total}
           </p>
+
+          <h2 className="text-5xl font-bold mt-3">
+            {total}
+          </h2>
         </div>
 
-        {/* Status */}
-        <div className="bg-white p-5 rounded-2xl shadow">
-          <h2 className="text-gray-500">
+        <div className="bg-gradient-to-r from-green-600 to-green-500 p-6 rounded-2xl shadow-xl">
+          <p className="text-sm opacity-80">
             System Status
-          </h2>
-
-          <p className="text-green-600 text-xl mt-2">
-            Online
           </p>
+
+          <h2 className="text-3xl font-bold mt-3">
+            Online
+          </h2>
+        </div>
+
+        <div className="bg-gradient-to-r from-purple-600 to-purple-500 p-6 rounded-2xl shadow-xl">
+          <p className="text-sm opacity-80">
+            Doctor Mode
+          </p>
+
+          <h2 className="text-3xl font-bold mt-3">
+            Active
+          </h2>
         </div>
 
       </div>
+
     </main>
   );
 }
