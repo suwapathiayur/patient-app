@@ -1,4 +1,4 @@
-"use client";
+i"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -22,8 +22,8 @@ export default function Dashboard() {
   return (
     <main>
 
-      <h1 className="text-3xl md:text-4xl font-bold text-cyan-400">
-        Suwapathi Ayurveda
+      <h1 className="text-4xl font-bold text-blue-500">
+        Dashboard
       </h1>
 
       <p className="text-gray-400 mt-2">
