@@ -9,6 +9,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
 
   return (
@@ -22,15 +23,24 @@ export default function RootLayout({
       >
         <div className="flex min-h-screen">
 
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="md:hidden fixed top-4 left-4 z-50 bg-cyan-600 text-white px-4 py-2 rounded-xl shadow-lg"
+          >
+            ☰
+          </button>
+
           {/* Sidebar */}
           <aside
-            className={
-              darkMode
-                ? "w-64 bg-gray-800 p-5"
-                : "w-64 bg-white p-5 shadow"
-            }
+            className={`
+              fixed md:static top-0 left-0 z-40
+              h-screen w-64 p-5 transition-transform duration-300
+              ${darkMode ? "bg-gray-800" : "bg-white shadow"}
+              ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+            `}
           >
-            <h1 className="text-2xl font-bold text-blue-500 mb-8">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-8">
               Clinic System
             </h1>
 
@@ -38,44 +48,37 @@ export default function RootLayout({
 
               <Link
                 href="/dashboard"
-                className="hover:bg-blue-500 hover:text-white p-3 rounded-xl transition"
+                className="hover:bg-cyan-500 hover:text-white p-3 rounded-xl transition"
               >
                 Dashboard
               </Link>
 
               <Link
                 href="/appointments"
-                className="hover:bg-blue-500 hover:text-white p-3 rounded-xl transition"
+                className="hover:bg-cyan-500 hover:text-white p-3 rounded-xl transition"
               >
                 Add Appointment
               </Link>
 
               <Link
-                href="/appointments/list"
-                className="hover:bg-blue-500 hover:text-white p-3 rounded-xl transition"
-              >
-                Appointment List
-              </Link>
-              <Link
-                 href="/patients"
-                className="hover:bg-blue-500 hover:text-white p-3 rounded-xl transition"
+                href="/patients"
+                className="hover:bg-cyan-500 hover:text-white p-3 rounded-xl transition"
               >
                 Patients
-</Link>
+              </Link>
 
             </nav>
 
-            {/* Dark Mode Button */}
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="mt-10 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl w-full"
+              className="mt-10 bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-xl w-full"
             >
               {darkMode ? "Light Mode" : "Dark Mode"}
             </button>
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-4 md:p-6 md:ml-0 ml-0 w-full overflow-x-hidden">
             {children}
           </main>
 

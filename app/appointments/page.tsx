@@ -50,7 +50,10 @@ export default function AppointmentPage() {
       alert("Please fill required fields");
       return;
     }
-
+    if (!/^0\d{9}$/.test(telephone)) {
+  alert("Invalid telephone number");
+  return;
+}
     const { error } = await supabase.from("appointments").insert({
       patient_id: patientId,
       appointment_date: appointmentDate,
