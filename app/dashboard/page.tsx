@@ -33,7 +33,7 @@ export default function Dashboard() {
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
 
-        <div className="bg-gradient-to-r from-cyan-600 to-cyan-500 p-6 rounded-3xl shadow-xl">
+        <div className="bg-gradient-to-r from-cyan-600 to-cyan-500 p-6 rounded-3xl shadow-xl hover:scale-105 transition">
           <p className="text-sm opacity-80">
             Total Appointments
           </p>
