@@ -22,11 +22,11 @@ export default function Dashboard() {
   return (
     <main>
 
-      <h1 className="text-4xl font-bold text-blue-500">
+      <h1 className="text-4xl font-bold text-green-500">
         Suwapathi Ayrveda
       </h1>
 
-      <p className="text-gray-400 mt-2">
+      <p className="text-cyan-400 mt-2">
         Your Wellness - Our Happiness
       </p>
 
