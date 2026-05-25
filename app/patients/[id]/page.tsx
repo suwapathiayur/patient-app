@@ -10,10 +10,24 @@ export default function PatientDetail({
 }) {
 
   const [records, setRecords] = useState<any[]>([]);
+  const [patientInfo, setPatientInfo] = useState<any>(null);
 
   useEffect(() => {
     loadPatientHistory();
+    loadPatientInfo();
   }, []);
+
+  function loadPatientInfo() {
+    const stored = window.localStorage.getItem("patientRegistry");
+    if (!stored) return;
+
+    try {
+      const registry = JSON.parse(stored) as Record<string, any>;
+      setPatientInfo(registry[params.id] || null);
+    } catch {
+      setPatientInfo(null);
+    }
+  }
 
   async function loadPatientHistory() {
 
@@ -32,8 +46,9 @@ export default function PatientDetail({
 
   /* Group by Year + Month */
   const grouped = records.reduce((acc: any, item: any) => {
-
-    const date = new Date(item.appointment_date);
+    const rawDate = String(item.appointment_date);
+    const isoDate = rawDate.includes("T") ? rawDate.slice(0, 10) : rawDate;
+    const date = new Date(isoDate);
 
     const year = date.getFullYear();
 
@@ -55,6 +70,17 @@ export default function PatientDetail({
 
   }, {});
 
+  function formatDate(value: any) {
+    if (!value) return "";
+    const raw = String(value);
+    return raw.includes("T") ? raw.slice(0, 10) : raw;
+  }
+
+  const displayName = patientInfo?.patient_name || records[0]?.patient_name || "Patient";
+  const displayTitle = patientInfo?.title || records[0]?.title || "";
+  const displayTelephone = patientInfo?.telephone || records[0]?.telephone || "-";
+  const displayWhatsapp = patientInfo?.whatsapp || records[0]?.whatsapp || "-";
+
   return (
     <main className="max-w-5xl mx-auto">
 
@@ -62,12 +88,17 @@ export default function PatientDetail({
       <div className="bg-gradient-to-r from-cyan-600 to-blue-600 rounded-3xl p-8 shadow-xl">
 
         <h1 className="text-4xl font-bold text-white">
-          Patient History
+          {displayTitle} {displayName}
         </h1>
 
         <p className="text-cyan-100 mt-2">
           ID: {params.id}
         </p>
+
+        <div className="mt-4 text-slate-100 space-y-1">
+          <p>Telephone: {displayTelephone}</p>
+          <p>WhatsApp: {displayWhatsapp}</p>
+        </div>
 
       </div>
 
@@ -127,7 +158,7 @@ export default function PatientDetail({
                             <div className="text-left md:text-right">
 
                               <p className="font-semibold">
-                                {patient.appointment_date}
+                                {formatDate(patient.appointment_date)}
                               </p>
 
                               <p className="mt-1">

@@ -33,15 +33,18 @@ export default function Dashboard() {
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
 
-        <div className="bg-gradient-to-r from-cyan-600 to-cyan-500 p-6 rounded-3xl shadow-xl hover:scale-105 transition">
+        <Link
+          href="/appointments/list"
+          className="block bg-gradient-to-r from-cyan-600 to-cyan-500 p-6 rounded-3xl shadow-xl hover:scale-105 transition"
+        >
           <p className="text-sm opacity-80">
-            Total Appointments
+            Today's & Upcoming
           </p>
 
           <h2 className="text-5xl font-bold mt-3">
             {total}
           </h2>
-        </div>
+        </Link>
 
         <Link
           href="/appointments"

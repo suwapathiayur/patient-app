@@ -61,6 +61,13 @@ export default function RootLayout({
               </Link>
 
               <Link
+                href="/appointments/list"
+                className="hover:bg-cyan-500 hover:text-white p-3 rounded-xl transition"
+              >
+                Appointment List
+              </Link>
+
+              <Link
                 href="/patients"
                 className="hover:bg-cyan-500 hover:text-white p-3 rounded-xl transition"
               >
