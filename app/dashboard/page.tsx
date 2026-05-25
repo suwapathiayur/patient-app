@@ -23,7 +23,7 @@ export default function Dashboard() {
     <main>
 
       <h1 className="text-4xl font-bold text-blue-500">
-        Dashboard
+        Suwapathi Ayrveda
       </h1>
 
       <p className="text-gray-400 mt-2">
